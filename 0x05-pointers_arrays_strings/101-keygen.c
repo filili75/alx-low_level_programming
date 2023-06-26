@@ -1,31 +1,36 @@
-#include "holberton.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 /**
- * main - check the code for Holberton School students.
+ * main - program that generates random valid
+ * passwords for the program 101-crackme
  *
- * Return: Always 0.
+ * Return: Always 0 (Success)
  */
 int main(void)
 {
-	int n;
+	int pass[100];
+	int i, sum, n;
 
-	n = _atoi("98");
-	printf("%d\n", n);
-	n = _atoi("-402");
-	printf("%d\n", n);
-	n = _atoi("          ------++++++-----+++++--98");
-	printf("%d\n", n);
-	n = _atoi("214748364");
-	printf("%d\n", n);
-	n = _atoi("0");
-	printf("%d\n", n);
-	n = _atoi("Suite 402");
-	printf("%d\n", n);
-	n = _atoi("         +      +    -    -98 Battery Street; San Francisco, CA 94111 - USA             ");
-	printf("%d\n", n);
-	n = _atoi("---++++ -++ Sui - te -   402 #cisfun :)");
-	n = _atoi("-++ Sui  te    402 #cisfun :)");
-	printf("%d\n", n);
+	sum = 0;	
+
+	srand(time(NULL));
+
+	for (i = 0; i < 100; i++)
+	{
+		pass[i] = rand() % 78;
+		sum += (pass[i] + '0');
+		putchar(pass[i] + '0');
+		if ((2772 - sum) - '0' < 78)
+		{
+			n = 2772 - sum - '0';
+			sum += n;
+			putchar(n + '0');
+			break;
+		}
+	}
+
 	return (0);
 }
+
