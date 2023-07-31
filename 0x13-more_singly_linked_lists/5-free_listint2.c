@@ -1,5 +1,5 @@
 #include "lists.h"
-
+#include <stdio.h>
 /**
  * free_listint2 - Frees a linked list and sets head to NULL.
  * @head: Pointer to the pointer of the listint_t list to be freed.
