@@ -8,34 +8,32 @@
  */
 listint_t *find_listint_loop(listint_t *head)
 {
-	listint_t *tortoise, *hare;
+	listint_t *slow = head; // Tortoise pointer
+	listint_t *fast = head; // Hare pointer
 
-	if (head == NULL || head->next == NULL)
-		return (NULL); // No loop in an empty list or a list with a single node
+	if (!head)
+		return (NULL); // No loop in an empty list
 
-	tortoise = head->next;
-	hare = (head->next)->next;
-
-	while (hare && hare->next)
+	while (slow && fast && fast->next)
 	{
-		if (tortoise == hare)
+		fast = fast->next->next; // Hare moves two steps at a time
+		slow = slow->next; // Tortoise moves one step at a time
+
+		// Check if the pointers meet (loop detected)
+		if (fast == slow)
 		{
 			// Reset one of the pointers and move both at the same pace
-			tortoise = head;
-			while (tortoise != hare)
+			slow = head; // Reset the tortoise to the head
+			while (slow != fast)
 			{
-				tortoise = tortoise->next;
-				hare = hare->next;
+				slow = slow->next;
+				fast = fast->next;
 			}
 
 			// The pointers meet at the loop starting node
-			return (tortoise);
+			return (fast);
 		}
-
-		tortoise = tortoise->next;
-		hare = (hare->next)->next;
 	}
 
-	return (NULL); 
+	return (NULL); // No loop detected
 }
-
