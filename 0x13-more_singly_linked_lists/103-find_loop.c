@@ -7,35 +7,32 @@
  * Return: The address of the node where the loop starts, or NULL if there is no loop.
  */
 
+
+
 listint_t *find_listint_loop(listint_t *head)
 {
-        listint_t *slow = head; // Tortoise pointer
-        listint_t *fast = head; // Hare pointer
+ listint_t *slow = head;
+ listint_t *fast = head;
 
-        if (!head)
-                return (NULL); // No loop in an empty list
+ if (!head)
+ return (NULL);
 
-        while (slow && fast && fast->next)
-        {
-                fast = fast->next->next; // Hare moves two steps at a time
-                slow = slow->next; // Tortoise moves one step at a time
+ while (slow && fast && fast->next)
+ {
+ fast = fast->next->next;
+ slow = slow->next;
+ if (fast == slow)
+ {
+ slow = head;
+ while (slow != fast)
+ {
+ slow = slow->next;
+ fast = fast->next;
+ }
+ return (fast);
+ }
+ }
 
-                // Check if the pointers meet (loop detected)
-                if (fast == slow)
-                {
-                        // Reset one of the pointers and move both at the same pace
-                        slow = head; // Reset the tortoise to the head
-                        while (slow != fast)
-                        {
-                                slow = slow->next;
-                                fast = fast->next;
-                        }
-
-                        // The pointers meet at the loop starting node
-                        return (fast);
-                }
-        }
-
-        return (NULL); // No loop detected
+ return (NULL);
 }
 
