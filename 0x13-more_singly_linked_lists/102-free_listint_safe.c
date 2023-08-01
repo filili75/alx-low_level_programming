@@ -6,40 +6,50 @@
  *
  * Return: Number of elements in the freed list.
  */
-size_t free_listint_safe(listint_t **list_head)
+#include <stdlib.h>
+
+/* Define the listint_t structure */
+typedef struct listint_s
 {
-	size_t elements_freed = 0;
-	int diff;
-	listint_t *temp_node;
+    int n;
+    struct listint_s *next;
+} listint_t;
 
-	if (!list_head || !*list_head)
-		return (0);
+/* Safely frees a linked list of integers and returns the number of nodes freed */
+size_t free_listint_safe(listint_t **h)
+{
+    size_t len = 0;         // Variable to store the number of nodes freed
+    int diff;               // Variable to calculate the difference between node addresses
+    listint_t *temp;        // Temporary pointer to hold the next node's address during deletion
 
-	while (*list_head)
-	{
-		diff = *list_head - (*list_head)->next;
+    // Check if the input list or the first node is NULL
+    if (!h || !*h)
+        return (0);
 
-		// If the difference is greater than 0, the list is not looped
-		if (diff > 0)
-		{
-			temp_node = (*list_head)->next;
-			free(*list_head);
-			*list_head = temp_node;
-			elements_freed++;
-		}
-		else
-		{
-			// If the difference is not greater than 0, the list is looped
-			free(*list_head);
-			*list_head = NULL;
-			elements_freed++;
-			break;
-		}
-	}
+    // Loop through the linked list and free each node one by one
+    while (*h)
+    {
+        diff = *h - (*h)->next; // Calculate the difference between the current node address and the next node address
+        if (diff > 0)
+        {
+            // If the difference is positive, it means there are more nodes ahead, proceed with deletion
+            temp = (*h)->next;  // Store the address of the next node
+            free(*h);           // Free the current node
+            *h = temp;          // Move to the next node
+            len++;              // Increment the counter of freed nodes
+        }
+        else
+        {
+            
+            free(*h);           // Free the current node
+            *h = NULL;          // Set the head pointer to NULL, breaking the loop
+            len++;              // Increment the counter of freed nodes
+            break;              // Exit the loop
+        }
+    }
 
-	// Set the head pointer to NULL after freeing all elements
-	*list_head = NULL;
+    *h = NULL;          // After freeing all nodes, set the head pointer to NULL to prevent dangling pointer
 
-	return (elements_freed);
+    return (len);       // Return the number of nodes freed
 }
 
