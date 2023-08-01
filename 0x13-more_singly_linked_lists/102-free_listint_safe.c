@@ -6,7 +6,7 @@
  *
  * Return: Number of elements in the freed list.
  */
-#include <stdlib.h>
+
 
 /* Define the listint_t structure */
 typedef struct listint_s
@@ -40,7 +40,7 @@ size_t free_listint_safe(listint_t **h)
         }
         else
         {
-            
+            // If the difference is non-positive, it means there are no more nodes or there's a loop in the list
             free(*h);           // Free the current node
             *h = NULL;          // Set the head pointer to NULL, breaking the loop
             len++;              // Increment the counter of freed nodes
