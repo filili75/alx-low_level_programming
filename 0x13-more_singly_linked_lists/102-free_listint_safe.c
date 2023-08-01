@@ -1,21 +1,16 @@
 #include "lists.h"
 
 /**
- * free_listint_safe - Frees a linked list safely.
- * @list_head: Pointer to the pointer of the first node in the linked list.
+ * free_listint_safe - Safely frees a linked list of integers.
+ * @h: Pointer to the first node in the linked list.
  *
- * Return: Number of elements in the freed list.
+ * This function safely frees a linked list of integers without causing
+ * memory leaks even if the list contains a loop. It takes the address of the
+ * head pointer of the list and iteratively frees each node, making sure that
+ * there are no dangling pointers left after the deletion process.
+ *
+ * Return: The number of elements in the freed list.
  */
-
-
-/* Define the listint_t structure */
-typedef struct listint_s
-{
-    int n;
-    struct listint_s *next;
-} listint_t;
-
-/* Safely frees a linked list of integers and returns the number of nodes freed */
 size_t free_listint_safe(listint_t **h)
 {
     size_t len = 0;         // Variable to store the number of nodes freed
