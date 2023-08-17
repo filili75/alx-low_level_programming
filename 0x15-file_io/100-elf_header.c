@@ -22,35 +22,36 @@ typedef struct {
     uint64_t entry_point;
 } ElfHeader;
 
-void print_elf_header(const ElfHeader *header) {
+void print_elf_header(const ElfHeader *header)
+{
+    int i; // Declare 'i' here for C90 compatibility
     printf("ELF Header:\n");
     printf("  Magic:");
-    for (int i = 0; i < ELF_MAGIC_SIZE; ++i) {
+    for (i = 0; i < ELF_MAGIC_SIZE; ++i) {
         printf(" %02x", header->magic[i]);
     }
     printf("\n");
     printf("  Class:                             ");
-    if (header->class == 1) {
+    if (header->class == 1)
         printf("ELF32\n");
-    } else if (header->class == 2) {
+    else if (header->class == 2)
         printf("ELF64\n");
-    } else {
+    else
         printf("<unknown>\n");
-    }
     printf("  Data:                              ");
-    if (header->data == 1) {
+    if (header->data == 1)
         printf("2's complement, little endian\n");
-    } else if (header->data == 2) {
+    else if (header->data == 2)
         printf("2's complement, big endian\n");
-    } else {
+    else
         printf("<unknown>\n");
-    }
     printf("  Version:                           %d (current)\n", header->version);
     printf("  OS/ABI:                            ");
-    switch (header->abi) {
+    switch (header->abi)
+    {
         case 0: printf("UNIX - System V\n"); break;
         case 6: printf("UNIX - Solaris\n"); break;
-        /* Add more cases for other OS/ABI values if needed*/
+        /* Add more cases for other OS/ABI values if needed */
         default: printf("<unknown: %d>\n", header->abi); break;
     }
     printf("  ABI Version:                       %d\n", header->abi_version);
@@ -58,21 +59,25 @@ void print_elf_header(const ElfHeader *header) {
     printf("  Entry point address:               0x%llx\n", (unsigned long long)header->entry_point);
 }
 
-int main(int argc, char *argv[]) {
-    if (argc != 2) {
+int main(int argc, char *argv[])
+{
+    if (argc != 2)
+    {
         fprintf(stderr, "Usage: %s elf_filename\n", argv[0]);
         return 98;
     }
 
     const char *filename = argv[1];
     int fd = open(filename, O_RDONLY);
-    if (fd == -1) {
+    if (fd == -1)
+    {
         fprintf(stderr, "Error opening file: %s\n", filename);
         return 98;
     }
 
     ElfHeader header;
-    if (read(fd, &header, sizeof(header)) != sizeof(header)) {
+    if (read(fd, &header, sizeof(header)) != sizeof(header))
+    {
         fprintf(stderr, "Error reading ELF header\n");
         close(fd);
         return 98;
