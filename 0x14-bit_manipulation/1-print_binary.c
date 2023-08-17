@@ -5,7 +5,7 @@
  * @n: number to print in binary.
  */
 
-          void print_binary(unsigned long int n)
+	void print_binary(unsigned long int n)
 {
 	int i, count = 0;
 
