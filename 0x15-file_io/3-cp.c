@@ -49,7 +49,7 @@ void close_file(int fd)
  * @argc: The number of arguments supplied to the program
  * @argv: An array of pointers to the argumentes
  *
- * returns:0 on success
+ * Return:0 on success
  *
  * Description: if  argument count is incorrect - exit code 97.
  * If file_from does not exist or cannot be read exit code 98.
